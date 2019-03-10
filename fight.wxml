@@ -1,0 +1,54 @@
+<!--pages/fight/fight.wxml-->
+<view class='loading' wx:if='{{isSearching}}'>
+  <image class='bg' src='http://xdf-kaoyan.xyz/images/fight/loading.png'></image>
+
+
+  <!--用户头像 user image-->
+
+  <image class='user' src="{{userInfo.avatarUrl}}"></image>
+
+  <text class='loadingTest'>寻找对战中>>></text>
+</view>
+<!-- 对战界面-->
+<view class='fighting' wx:else>
+  <image class='fight_bg' src='http://xdf-kaoyan.xyz/images/fight/fighting.png'></image>
+
+  <view class='{{isReady?"left-user-ready":"left-user"}}'>
+    <text wx:if='{{!isReady}}' class='user-name' style='  left: 0;'>{{uname}}</text>
+<!-- 用户头像-->
+    <image   class="touxiang" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+
+<!--  倒计时的图标-->
+  <view class='{{isReady?"countDown-ready":"countDown"}}'>{{isReady?countDown:'VS'}}</view>
+
+<!--答题内容-->
+  <view class='cnt' wx:if='{{isReady}}'>
+    <text style='font-size:1rem;'>第{{currentque}}题</text>
+  <text style='font-size:1.5rem;display:block;margin:10rpx 0'>{{que}}</text>
+   <!--下面是选项           问题在这里  -->
+    
+    <text wx:key='{{index}}' data-right='{{right}}' data-index='{{index}}' bindtap='checkAns'
+     style="color:#4354a6;width:80%;border-radius:10rpx;margin:20rpx auto;font-size:1.2em;padding:15rpx 0;font-weight:bold;background-color:#fff"
+      wx:for='{{ans}}'>{{item}}</text>
+
+  </view>
+  <view>
+    <text></text>
+  </view>
+
+
+  <view class='{{isReady?"right-user-ready":"right-user"}}'>
+  <!-- 对手机器人头像      <多添加点机器人头像和名字，让每次去随机匹配头像和名字>-->
+    <image src='http://xdf-kaoyan.xyz/images/book_02.png'></image>
+
+    <text wx:if='{{!isReady}}' style='right:0;bottom:0%' class='user-name'>机器人</text>
+  </view>
+</view>
+
+<view wx:if='{{isReady}}' class='left-score'>{{score_A}}分</view>
+<view wx:if='{{isReady}}' class='right-score'>{{score_B}}分</view>
+
+<view wx:if='{{gameover}}' class='alert-box' style='color:{{result=="Win"?"orangered":"gray"}}'>
+  {{resultData}}
+</view>
